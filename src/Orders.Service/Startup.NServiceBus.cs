@@ -31,8 +31,6 @@ namespace Microsoft.Extensions.DependencyInjection
             var serialization = cfg.UseSerialization<NewtonsoftSerializer>();
             serialization.Settings(DefaultPersistenceCamelCaseJsonSerializerSettings.Instance);
 
-            cfg.CustomDiagnosticsWriter(diagnostics => Task.CompletedTask);
-
             cfg.Recoverability().Immediate(c => c.NumberOfRetries(1)).Delayed(c => c.NumberOfRetries(5).TimeIncrease(TimeSpan.FromSeconds(2)));
 
             cfg.UniquelyIdentifyRunningInstance().UsingNames(endpointName, Environment.MachineName);
@@ -42,6 +40,11 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var transport = cfg.UseTransport<AzureServiceBusTransport>();
             transport.ConnectionString(connection.ToString);
+            
+            var dataBus = cfg.UseDataBus<AzureDataBus>();
+            dataBus.ConnectionString("UseDevelopmentStorage=true");
+            dataBus.CleanupInterval(10);
+            dataBus.Container("databus");
             
             var management = new Bus(cfg);
             services.AddSingleton(provider => management.Session);

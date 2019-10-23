@@ -12,5 +12,6 @@
         <PackageReference Include="NServiceBus.MSDependencyInjection" Version="0.1.4" />
         <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="2.2.0" />
         <PackageReference Include="NServiceBus.Transport.AzureServiceBus" Version="1.2.1" />
+        <PackageReference Include="NServiceBus.DataBus.AzureBlobStorage" Version="3.0.0" />
     </ItemGroup>
 </Project>
